@@ -1,24 +1,30 @@
 import numpy as np
+import pydicom
 from PIL import Image
-import csv
+import json
 
-# Read the CSV file
-with open('appliedArray.csv', 'r') as file:
-    csv_data = file.read()
+# Read JSON file
+with open('appliedArray.json', 'r') as file:
+    appliedArray = json.load(file)
 
-# Convert the CSV data to a NumPy array
-applied_array = np.array([float(value) for value in csv_data.split(',')])
+# Convert the list to a NumPy array
+appliedArray = np.array(appliedArray, dtype=np.float32)
+print(appliedArray)
+print(type(appliedArray))
 
-# Reshape the array to match the shape used in JavaScript
-applied_array = applied_array.reshape(shape['slice'], shape['rows'], shape['cols'])
+# Reshape the array if needed based on your original shape
+# For example, if the shape is (slice, rows, cols), you can do:
+# appliedArray = appliedArray.reshape((slice, rows, cols))
 
-# Convert to uint8
-final_image = np.uint8(applied_array)
+# Your existing code
+im = pydicom.dcmread("Phantoms\Phantom Test 02\A\Z21")
+new_image = im.pixel_array
 
-# Create an image
+rescaled = appliedArray
+print(rescaled)
+print(type(rescaled))
+final_image = np.uint8(rescaled)
+
 img = Image.fromarray(final_image)
-
-# Display and save the image
 img.show()
 img.save("test.png")
-print(type(final_image))

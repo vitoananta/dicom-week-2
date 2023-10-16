@@ -53,7 +53,15 @@ function WWWC(shape, data, wwwc) {
 
 const appliedArray = WWWC(shape, data, wwwc);
 console.log(appliedArray);
+// console.log(typeof appliedArray);
 
-// Write the appliedArray to a CSV file
-const csvData = appliedArray.join(',');
-fs.writeFileSync('appliedArray.csv', csvData);
+// Save appliedArray to a binary file
+// const arrayBuffer = appliedArray.buffer;
+// const buffer = Buffer.from(arrayBuffer);
+// fs.writeFileSync('./appliedArray.bin', buffer);
+
+// Convert appliedArray to a JSON string
+const appliedArrayJSON = JSON.stringify(Array.from(appliedArray));
+
+// Write JSON string to a file
+fs.writeFileSync('appliedArray.json', appliedArrayJSON);
