@@ -1,6 +1,6 @@
 let data_path = './data/volume/';
 data_path = './Phantoms/Manekin-01/A/Z01';
-data_path = './Phantoms/Phantom Test 02/A/Z21';
+data_path = './Phantoms/Phantom Test 02/A/Z42';
 
 var daikon = require('./daikon-min.js');
 var fs = require('fs');
@@ -52,16 +52,12 @@ function WWWC(shape, data, wwwc) {
 }
 
 const appliedArray = WWWC(shape, data, wwwc);
-console.log(appliedArray);
-// console.log(typeof appliedArray);
+// console.log(appliedArray);
 
-// Save appliedArray to a binary file
-// const arrayBuffer = appliedArray.buffer;
-// const buffer = Buffer.from(arrayBuffer);
-// fs.writeFileSync('./appliedArray.bin', buffer);
+// make json
+const appliedArrayJson = JSON.stringify(Array.from(appliedArray));
 
-// Convert appliedArray to a JSON string
-const appliedArrayJSON = JSON.stringify(Array.from(appliedArray));
+// Write the JSON data to a file
+fs.writeFileSync('appliedArray.json', appliedArrayJson);
 
-// Write JSON string to a file
-fs.writeFileSync('appliedArray.json', appliedArrayJSON);
+console.log('JSON data has been written to appliedArray.json');
