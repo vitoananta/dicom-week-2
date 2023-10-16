@@ -1,6 +1,6 @@
 let data_path = './data/volume/';
-data_path = './Phantoms/Phantom Test 02/A/Z21';
 data_path = './Phantoms/Manekin-01/A/Z01';
+data_path = './Phantoms/Phantom Test 02/A/Z21';
 
 var daikon = require('./daikon-min.js');
 var fs = require('fs');
@@ -40,7 +40,6 @@ function WWWC(shape, data, wwwc) {
     const [x, y, z] = [shape.slice, shape.rows, shape.cols];
     const size = y * z;
     const appliedArray = new Float32Array(size);
-    // console.log('Sebelum WWWC: ' + data);
     for (let i = 0; i < size; i++) {
         const newValue = ((data[i] - (wwwc[1] - 0.5)) / (wwwc[0]) + 0.5) * 255;
         if (newValue > 255 || newValue < 0) {
@@ -53,4 +52,8 @@ function WWWC(shape, data, wwwc) {
 }
 
 const appliedArray = WWWC(shape, data, wwwc);
-console.log('Sesudah WWWC: ' + appliedArray);
+console.log(appliedArray);
+
+// Write the appliedArray to a CSV file
+const csvData = appliedArray.join(',');
+fs.writeFileSync('appliedArray.csv', csvData);
